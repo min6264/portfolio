@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>大虾初处理一体化机器 | 项目展示</title>
+<meta name="description" content="大虾初处理一体化机器——集上料、去头、开背、去虾线、取肉、筛选六工序于一体的虾类自动化初加工设备。">
+<style>
+:root{
+  --bg:#ffffff;
+  --bg-soft:#f4faf8;
+  --ink:#0f172a;
+  --ink-2:#334155;
+  --muted:#64748b;
+  --line:#e2e8f0;
+  --brand:#0d9488;
+  --brand-2:#14b8a6;
+  --brand-deep:#0f766e;
+  --accent:#10b981;
+  --hero-from:#06251f;
+  --hero-to:#0b3b33;
+  --radius:18px;
+  --radius-sm:12px;
+  --shadow:0 10px 30px -12px rgba(15,23,42,.18);
+  --shadow-lg:0 24px 60px -20px rgba(15,23,42,.28);
+  --maxw:1200px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:"Inter","PingFang SC","Microsoft YaHei","Segoe UI",system-ui,-apple-system,sans-serif;
+  color:var(--ink);background:var(--bg);line-height:1.7;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+.container{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+
+.nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.85);backdrop-filter:saturate(180%) blur(14px);border-bottom:1px solid var(--line)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:62px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:16px;letter-spacing:-.01em}
+.brand-dot{width:10px;height:10px;border-radius:50%;background:linear-gradient(135deg,var(--brand),var(--brand-2));box-shadow:0 0 0 4px rgba(13,148,136,.12)}
+.nav-links{display:flex;gap:26px;font-size:14px;color:var(--ink-2)}
+.nav-links a{transition:color .2s}
+.nav-links a:hover{color:var(--brand)}
+@media(max-width:720px){.nav-links{display:none}}
+
+.hero{position:relative;overflow:hidden;color:#fff;
+  background:radial-gradient(1200px 600px at 80% -10%,rgba(20,184,166,.35),transparent 60%),
+             radial-gradient(900px 500px at -10% 110%,rgba(13,148,136,.5),transparent 55%),
+             linear-gradient(135deg,var(--hero-from),var(--hero-to));}
+.hero::after{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.08) 1px,transparent 1px);background-size:26px 26px;pointer-events:none}
+.hero-inner{position:relative;z-index:1;padding:88px 0 78px}
+.kicker{display:inline-flex;align-items:center;gap:8px;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:#99f6e4;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);padding:7px 14px;border-radius:999px;margin-bottom:22px}
+.hero h1{font-size:clamp(30px,4.6vw,52px);line-height:1.15;font-weight:800;letter-spacing:-.02em;max-width:16em}
+.hero h1 .grad{background:linear-gradient(90deg,#5eead4,#99f6e4);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p.lead{margin-top:20px;font-size:clamp(16px,1.8vw,19px);color:#ccfbf1;max-width:46em}
+.hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:42px}
+.stat{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:20px 18px;backdrop-filter:blur(4px)}
+.stat .num{font-size:30px;font-weight:800;letter-spacing:-.02em;background:linear-gradient(90deg,#fff,#b9f0e4);-webkit-background-clip:text;background-clip:text;color:transparent}
+.stat .lbl{font-size:13px;color:#99f6e4;margin-top:4px}
+@media(max-width:720px){.hero-stats{grid-template-columns:repeat(2,1fr)}.hero-inner{padding:60px 0 54px}}
+
+section{padding:72px 0}
+section.alt{background:var(--bg-soft)}
+.sec-head{margin-bottom:40px}
+.sec-head .tag{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.1em;color:var(--brand);text-transform:uppercase;margin-bottom:10px}
+.sec-head h2{font-size:clamp(24px,3vw,34px);font-weight:800;letter-spacing:-.02em;line-height:1.25}
+.sec-head p{color:var(--muted);margin-top:12px;max-width:62em;font-size:16px}
+.sec-head .bar{width:44px;height:4px;border-radius:2px;background:linear-gradient(90deg,var(--brand),var(--brand-2));margin-top:18px}
+
+.overview-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:stretch}
+@media(max-width:860px){.overview-grid{grid-template-columns:1fr}}
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:30px;box-shadow:var(--shadow)}
+.card h3{font-size:20px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.card h3 .ic{width:34px;height:34px;border-radius:9px;display:inline-flex;align-items:center;justify-content:center;background:linear-gradient(135deg,rgba(13,148,136,.12),rgba(20,184,166,.12));color:var(--brand);font-size:17px}
+.card p{color:var(--ink-2);font-size:15.5px}
+.card ul{list-style:none;margin-top:8px}
+.card ul li{position:relative;padding-left:22px;margin:9px 0;color:var(--ink-2);font-size:15px}
+.card ul li::before{content:"";position:absolute;left:2px;top:9px;width:9px;height:9px;border-radius:3px;background:linear-gradient(135deg,var(--brand),var(--brand-2));transform:rotate(45deg)}
+
+/* 六工序流程 */
+.flow{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
+.flow .f{background:#fff;border:1px solid var(--line);border-radius:var(--radius-sm);padding:22px 14px;text-align:center;box-shadow:var(--shadow);position:relative}
+.flow .f .ic{font-size:24px;width:46px;height:46px;margin:0 auto 10px;border-radius:50%;background:linear-gradient(135deg,rgba(13,148,136,.12),rgba(20,184,166,.14));display:flex;align-items:center;justify-content:center}
+.flow .f .t{font-weight:700;font-size:16px}
+.flow .f .d{font-size:12.5px;color:var(--muted);margin-top:4px}
+.flow .f:not(:last-child)::after{content:"→";position:absolute;right:-12px;top:50%;transform:translateY(-50%);color:var(--brand);font-weight:700;font-size:18px;z-index:2}
+@media(max-width:860px){.flow{grid-template-columns:repeat(3,1fr)}.flow .f:not(:last-child)::after{display:none}}
+@media(max-width:520px){.flow{grid-template-columns:repeat(2,1fr)}}
+
+/* 个人贡献机制 */
+.mech{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.mech .m{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:26px;box-shadow:var(--shadow)}
+.mech .m .no{font-size:12px;font-weight:800;letter-spacing:.1em;color:var(--brand);margin-bottom:8px}
+.mech .m h4{font-size:17px;font-weight:700;margin-bottom:8px}
+.mech .m p{color:var(--ink-2);font-size:14.5px}
+@media(max-width:720px){.mech{grid-template-columns:1fr}}
+
+.gallery{display:grid;gap:22px}
+.gallery.cols-2{grid-template-columns:1fr 1fr}
+@media(max-width:720px){.gallery.cols-2{grid-template-columns:1fr}}
+figure{margin:0}
+figure .imgbox{position:relative;overflow:hidden;border-radius:var(--radius);background:#eef2f7;border:1px solid var(--line);cursor:zoom-in;box-shadow:var(--shadow);transition:transform .28s ease,box-shadow .28s ease}
+figure .imgbox:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+figure img{width:100%;height:auto;object-fit:cover;transition:transform .4s ease}
+figure .imgbox:hover img{transform:scale(1.02)}
+figure figcaption{text-align:center;font-size:14px;color:var(--ink-2);margin-top:12px;font-weight:500}
+figure figcaption small{display:block;color:var(--muted);font-weight:400;font-size:12.5px;margin-top:2px}
+.imgbox .zoom-ic{position:absolute;top:12px;right:12px;width:34px;height:34px;border-radius:9px;background:rgba(15,23,42,.55);color:#fff;display:flex;align-items:center;justify-content:center;font-size:15px;opacity:0;transition:opacity .2s;backdrop-filter:blur(4px)}
+figure .imgbox:hover .zoom-ic{opacity:1}
+
+.results{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.result{background:linear-gradient(160deg,#fff,#f0fdfa);border:1px solid var(--line);border-radius:var(--radius);padding:28px;text-align:center;box-shadow:var(--shadow)}
+.result .big{font-size:34px;font-weight:800;letter-spacing:-.02em;background:linear-gradient(135deg,var(--brand),var(--brand-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.result .sub{font-size:14px;color:var(--ink-2);margin-top:6px}
+@media(max-width:720px){.results{grid-template-columns:1fr}}
+
+.role{display:flex;gap:14px;align-items:flex-start;background:linear-gradient(135deg,rgba(13,148,136,.08),rgba(20,184,166,.06));border:1px solid #99f6e4;border-radius:var(--radius-sm);padding:18px 22px;color:#115e59;font-size:15px;margin-bottom:28px}
+.role .em{font-size:20px;line-height:1.4}
+
+footer{background:var(--hero-from);color:#cbd5e1;padding:48px 0;margin-top:20px}
+footer .inner{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;align-items:center}
+footer .tags{display:flex;flex-wrap:wrap;gap:8px}
+footer .tags span{font-size:12.5px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);padding:5px 12px;border-radius:999px}
+
+.lb{position:fixed;inset:0;z-index:200;background:rgba(4,10,22,.9);display:none;align-items:center;justify-content:center;padding:24px;backdrop-filter:blur(6px)}
+.lb.open{display:flex}
+.lb img{max-width:96vw;max-height:90vh;border-radius:10px;box-shadow:0 30px 80px rgba(0,0,0,.5);object-fit:contain}
+.lb .cap{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);color:#e2e8f0;font-size:14px;background:rgba(15,23,42,.7);padding:8px 18px;border-radius:999px;max-width:80vw;text-align:center}
+.lb .close{position:absolute;top:22px;right:26px;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.12);color:#fff;font-size:22px;display:flex;align-items:center;justify-content:center;cursor:pointer;border:none}
+.lb .close:hover{background:rgba(255,255,255,.24)}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="container nav-inner">
+    <div class="brand"><span class="brand-dot"></span>大虾初处理一体化机器</div>
+    <div class="nav-links">
+      <a href="#overview">项目简介</a>
+      <a href="#process">六工序方案</a>
+      <a href="#design">结构设计</a>
+      <a href="#prototype">仿真与样机</a>
+      <a href="#results">成果</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="container hero-inner">
+    <span class="kicker">Mechanical Design · Automation</span>
+    <h1>大虾初处理一体化机器<br><span class="grad">六工序集成 · 自动化初加工</span></h1>
+    <p class="lead">针对传统虾类初加工过程中人工依赖程度高、加工效率低、规格适应性不足及工序分散等问题，提出六工序一体化方案，研发集上料、去头、开背、去虾线、取肉和筛选于一体的虾类自动化初加工设备。</p>
+    <div class="hero-stats">
+      <div class="stat"><div class="num">6</div><div class="lbl">工序一体化</div></div>
+      <div class="stat"><div class="num">团队负责人</div><div class="lbl">方案设计 & 进度统筹</div></div>
+      <div class="stat"><div class="num">3 项</div><div class="lbl">国家专利</div></div>
+      <div class="stat"><div class="num">省二等奖</div><div class="lbl">机械创新设计大赛</div></div>
+    </div>
+  </div>
+</header>
+
+<section id="overview">
+  <div class="container">
+    <div class="role"><span class="em">👤</span><span><strong>项目角色：团队负责人</strong> —— 统筹整体方案设计与项目进度，提出六工序一体化方案，主导整机机械结构设计。</span></div>
+    <div class="sec-head">
+      <span class="tag">Project Overview</span>
+      <h2>项目简介</h2>
+      <p>以「一体化、自动化、规格自适应」为目标，将分散的虾类初加工工序整合为一台连续作业设备，显著降低人工依赖、提升加工效率与规格适应性。</p>
+      <div class="bar"></div>
+    </div>
+    <div class="overview-grid">
+      <div class="card">
+        <h3><span class="ic">✦</span>项目背景与目标</h3>
+        <p>传统虾类初加工以人工为主，存在四大痛点：</p>
+        <ul>
+          <li>人工依赖程度高，劳动强度大</li>
+          <li>加工效率低，难以规模化</li>
+          <li>规格适应性不足，虾体差异难处理</li>
+          <li>工序分散，设备与场地占用多</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3><span class="ic">⚙</span>解决方案</h3>
+        <p>研发集六道核心工序于一体的自动化设备，通过凸轮、连杆、摩擦轮等机构创新，实现虾体从定向输送到分级筛选的全程自动化。</p>
+        <ul>
+          <li>凸轮驱动阶梯上料，实现虾体自动定向排列</li>
+          <li>摩擦轮弹性变形实现不同规格被动自适应夹紧</li>
+          <li>激光传感器 + 分级筛板实现自动分级计数</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="process" class="alt">
+  <div class="container">
+    <div class="sec-head">
+      <span class="tag">Six-process Integration</span>
+      <h2>六工序一体化方案</h2>
+      <p>将上料、去头、开背、去虾线、取肉、筛选六道工序无缝串联，形成连续自动化加工作业线。</p>
+      <div class="bar"></div>
+    </div>
+    <div class="flow">
+      <div class="f"><div class="ic">📥</div><div class="t">上料</div><div class="d">阶梯定向输送</div></div>
+      <div class="f"><div class="ic">🔪</div><div class="t">去头</div><div class="d">确定姿态切断</div></div>
+      <div class="f"><div class="ic">✂️</div><div class="t">开背</div><div class="d">自适应夹紧开背</div></div>
+      <div class="f"><div class="ic">🧵</div><div class="t">去虾线</div><div class="d">虾线剔除</div></div>
+      <div class="f"><div class="ic">🦐</div><div class="t">取肉</div><div class="d">虾肉分离</div></div>
+      <div class="f"><div class="ic">📏</div><div class="t">筛选</div><div class="d">分级计数</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="design">
+  <div class="container">
+    <div class="sec-head">
+      <span class="tag">Mechanism Design</span>
+      <h2>整机机械结构方案设计</h2>
+      <p>独立完成整机机械结构方案设计，围绕「定向输送—姿态控制—自适应夹紧—自动分级」四大环节进行机构创新。</p>
+      <div class="bar"></div>
+    </div>
+    <div class="mech">
+      <div class="m"><div class="no">MECHANISM 01</div><h4>凸轮驱动阶梯上料机构</h4><p>通过凸轮轮廓曲线驱动阶梯推板，实现虾体自动定向排列与连续输送，为后续工序提供稳定有序的虾流。</p></div>
+      <div class="m"><div class="no">MECHANISM 02</div><h4>四杆机构 + 下凸实体曲线耦合</h4><p>四杆机构与下凸实体曲线耦合，实现运动中托盘自动倾斜翻转，保证去头后虾体以确定姿态进入后续工序。</p></div>
+      <div class="m"><div class="no">MECHANISM 03</div><h4>弹簧预紧式摩擦轮</h4><p>利用弹性变形实现对不同规格虾体的被动自适应夹紧，满足不同规格虾体的开背需求。</p></div>
+      <div class="m"><div class="no">MECHANISM 04</div><h4>阶梯式分级筛板 + 激光传感器</h4><p>阶梯式分级筛板结合激光传感器，实现按尺寸自动分级计数，完成成品自动化分选。</p></div>
+    </div>
+    <div class="gallery cols-2" style="margin-top:30px">
+      <figure>
+        <div class="imgbox" data-src="structure.png" data-cap="整机机械结构方案设计"><img src="structure.png" alt="整机机械结构方案设计" loading="lazy"><span class="zoom-ic">⤢</span></div>
+        <figcaption>整机机械结构方案设计<small>六工序一体化设备总体方案</small></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section id="prototype" class="alt">
+  <div class="container">
+    <div class="sec-head">
+      <span class="tag">Simulation & Prototype</span>
+      <h2>仿真分析与样机制造</h2>
+      <p>对关键零部件开展有限元分析并选型；合理设计零件结构并采用 3D 打印技术实现样件快速制造；参与视觉识别与电控系统集成联调。</p>
+      <div class="bar"></div>
+    </div>
+    <div class="gallery cols-2">
+      <figure>
+        <div class="imgbox" data-src="fea-prototype.png" data-cap="样机与仿真验证"><img src="fea-prototype.png" alt="样机与仿真验证" loading="lazy"><span class="zoom-ic">⤢</span></div>
+        <figcaption>有限元分析与样机制造<small>关键零件校核 · 3D 打印快速制造</small></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section id="results">
+  <div class="container">
+    <div class="sec-head">
+      <span class="tag">Achievements</span>
+      <h2>项目成果</h2>
+      <p>完成样机装配、调试与实际大虾加工验证，形成从方案设计到样机落地的完整工程闭环。</p>
+      <div class="bar"></div>
+    </div>
+    <div class="results">
+      <div class="result"><div class="big">3 项</div><div class="sub">申请国家专利</div></div>
+      <div class="result"><div class="big">科技查新</div><div class="sub">通过科技查新</div></div>
+      <div class="result"><div class="big">省二等奖</div><div class="sub">第十一届全国大学生机械创新设计大赛</div></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container inner">
+    <div>大虾初处理一体化机器 · 项目展示</div>
+    <div class="tags">
+      <span>机械设计</span><span>六工序一体化</span><span>有限元分析</span><span>3D 打印</span><span>视觉识别</span>
+    </div>
+  </div>
+</footer>
+
+<div class="lb" id="lb">
+  <button class="close" aria-label="关闭">×</button>
+  <img id="lb-img" src="" alt="">
+  <div class="cap" id="lb-cap"></div>
+</div>
+
+<script>
+(function(){
+  var lb=document.getElementById('lb'),img=document.getElementById('lb-img'),cap=document.getElementById('lb-cap');
+  document.querySelectorAll('.imgbox').forEach(function(b){
+    b.addEventListener('click',function(){
+      img.src=b.getAttribute('data-src');
+      cap.textContent=b.getAttribute('data-cap')||'';
+      lb.classList.add('open');
+      document.body.style.overflow='hidden';
+    });
+  });
+  function close(){lb.classList.remove('open');document.body.style.overflow='';}
+  lb.querySelector('.close').addEventListener('click',close);
+  lb.addEventListener('click',function(e){if(e.target===lb)close();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
+})();
+</script>
+</body>
+</html>
