@@ -4,59 +4,22 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>个人项目作品集</title>
-<meta name="description" content="个人机械与机器人项目作品集">
 <style>
-:root{--ink:#0f172a;--ink-2:#334155;--muted:#64748b;--line:#e2e8f0;--bg:#f5f7fb}
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:"Inter","PingFang SC","Microsoft YaHei","Segoe UI",system-ui,sans-serif;color:var(--ink);background:var(--bg);line-height:1.7;-webkit-font-smoothing:antialiased}
-.container{max-width:1080px;margin:0 auto;padding:0 24px}
-header{padding:72px 0 40px;text-align:center}
-header .kicker{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#2563eb;font-weight:700}
-header h1{font-size:clamp(30px,5vw,44px);font-weight:800;letter-spacing:-.02em;margin-top:12px}
-header p{color:var(--muted);margin-top:12px;font-size:17px;max-width:36em;margin-left:auto;margin-right:auto}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:26px;padding-bottom:80px}
-@media(max-width:760px){.grid{grid-template-columns:1fr}}
-.card{display:block;background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden;box-shadow:0 10px 30px -12px rgba(15,23,42,.16);transition:transform .28s ease,box-shadow .28s ease}
-.card:hover{transform:translateY(-6px);box-shadow:0 26px 60px -20px rgba(15,23,42,.28)}
-.card .cover{height:200px;display:flex;align-items:center;justify-content:center;font-size:56px;color:#fff}
-.card .cover.arm{background:linear-gradient(135deg,#0b1d3a,#123a6b)}
-.card .cover.shrimp{background:linear-gradient(135deg,#06251f,#0b3b33)}
-.card .body{padding:26px}
-.card .body .tag{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
-.card.arm .tag{color:#2563eb}.card.shrimp .tag{color:#0d9488}
-.card h2{font-size:22px;font-weight:700;letter-spacing:-.01em}
-.card p{color:var(--ink-2);font-size:15px;margin-top:10px}
-.card .go{margin-top:18px;font-size:14px;font-weight:600;display:inline-flex;align-items:center;gap:6px}
-.card.arm .go{color:#2563eb}.card.shrimp .go{color:#0d9488}
+body{margin:0;font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;color:#1f2328;background:#fff;line-height:1.8}
+.wrap{max-width:720px;margin:0 auto;padding:60px 20px}
+h1{font-size:24px;font-weight:700;margin:0 0 8px}
+.sub{color:#57606a;margin:0 0 32px}
+a{display:block;padding:16px 0;border-top:1px solid #eee;color:#0969da;text-decoration:none;font-size:17px}
+a:last-child{border-bottom:1px solid #eee}
+a small{display:block;color:#57606a;font-size:14px}
 </style>
 </head>
 <body>
-<div class="container">
-  <header>
-    <div class="kicker">Personal Project Portfolio</div>
-    <h1>个人项目作品集</h1>
-    <p>机械工程 · 机器人 · 自动化 · 计算机视觉</p>
-  </header>
-  <div class="grid">
-    <a class="card arm" href="arm.html">
-      <div class="cover arm">🦾</div>
-      <div class="body">
-        <div class="tag">Robotics · Computer Vision</div>
-        <h2>食用菌视觉采摘机械臂</h2>
-        <p>一代机与二代机迭代，三种末端夹爪设计，融合 YOLOv8 视觉识别与 MLP+PSO 逆运动学求解。</p>
-        <span class="go">查看项目 →</span>
-      </div>
-    </a>
-    <a class="card shrimp" href="shrimp.html">
-      <div class="cover shrimp">🦐</div>
-      <div class="body">
-        <div class="tag">Mechanical Design · Automation</div>
-        <h2>大虾初处理一体化机器</h2>
-        <p>六工序一体化方案，集上料、去头、开背、去虾线、取肉、筛选于一体的虾类自动化初加工设备。</p>
-        <span class="go">查看项目 →</span>
-      </div>
-    </a>
-  </div>
+<div class="wrap">
+<h1>个人项目作品集</h1>
+<p class="sub">机械工程 · 机器人 · 自动化 · 计算机视觉</p>
+<a href="arm.html">食用菌视觉采摘机械臂<small>视觉识别 · 末端夹爪 · 有限元分析 · 逆运动学</small></a>
+<a href="shrimp.html">大虾初处理一体化机器<small>六工序一体化 · 机械结构设计 · 自动化初加工</small></a>
 </div>
 </body>
 </html>

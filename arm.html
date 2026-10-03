@@ -3,416 +3,113 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>食用菌视觉采摘机械臂 | 项目展示</title>
-<meta name="description" content="食用菌视觉采摘机械臂——面向菌棚场景的智能采摘机器人，融合 YOLOv8 视觉识别、MLP+PSO 逆运动学求解与 ANSYS 有限元优化。">
+<title>食用菌视觉采摘机械臂</title>
 <style>
-:root{
-  --bg:#ffffff;
-  --bg-soft:#f5f7fb;
-  --ink:#0f172a;
-  --ink-2:#334155;
-  --muted:#64748b;
-  --line:#e2e8f0;
-  --brand:#2563eb;
-  --brand-2:#06b6d4;
-  --brand-deep:#1d4ed8;
-  --accent:#0ea5e9;
-  --hero-from:#0b1d3a;
-  --hero-to:#123a6b;
-  --radius:18px;
-  --radius-sm:12px;
-  --shadow:0 10px 30px -12px rgba(15,23,42,.18);
-  --shadow-lg:0 24px 60px -20px rgba(15,23,42,.28);
-  --maxw:1200px;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{
-  font-family:"Inter","PingFang SC","Microsoft YaHei","Segoe UI",system-ui,-apple-system,sans-serif;
-  color:var(--ink);background:var(--bg);line-height:1.7;
-  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
-}
-a{color:inherit;text-decoration:none}
-img{display:block;max-width:100%}
-.container{max-width:var(--maxw);margin:0 auto;padding:0 24px}
-
-/* ---------- 导航 ---------- */
-.nav{
-  position:sticky;top:0;z-index:50;background:rgba(255,255,255,.85);
-  backdrop-filter:saturate(180%) blur(14px);border-bottom:1px solid var(--line);
-}
-.nav-inner{display:flex;align-items:center;justify-content:space-between;height:62px}
-.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:16px;letter-spacing:-.01em}
-.brand-dot{width:10px;height:10px;border-radius:50%;background:linear-gradient(135deg,var(--brand),var(--brand-2));box-shadow:0 0 0 4px rgba(37,99,235,.12)}
-.nav-links{display:flex;gap:26px;font-size:14px;color:var(--ink-2)}
-.nav-links a{transition:color .2s}
-.nav-links a:hover{color:var(--brand)}
-@media(max-width:720px){.nav-links{display:none}}
-
-/* ---------- Hero ---------- */
-.hero{
-  position:relative;overflow:hidden;color:#fff;
-  background:radial-gradient(1200px 600px at 80% -10%,rgba(6,182,212,.35),transparent 60%),
-             radial-gradient(900px 500px at -10% 110%,rgba(37,99,235,.45),transparent 55%),
-             linear-gradient(135deg,var(--hero-from),var(--hero-to));
-}
-.hero::after{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.08) 1px,transparent 1px);background-size:26px 26px;pointer-events:none}
-.hero-inner{position:relative;z-index:1;padding:88px 0 78px}
-.kicker{display:inline-flex;align-items:center;gap:8px;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:#a5d8ff;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);padding:7px 14px;border-radius:999px;margin-bottom:22px}
-.hero h1{font-size:clamp(30px,4.6vw,52px);line-height:1.15;font-weight:800;letter-spacing:-.02em;max-width:16em}
-.hero h1 .grad{background:linear-gradient(90deg,#7dd3fc,#67e8f9);-webkit-background-clip:text;background-clip:text;color:transparent}
-.hero p.lead{margin-top:20px;font-size:clamp(16px,1.8vw,19px);color:#dbeafe;max-width:44em}
-.hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:42px}
-.stat{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:20px 18px;backdrop-filter:blur(4px)}
-.stat .num{font-size:30px;font-weight:800;letter-spacing:-.02em;background:linear-gradient(90deg,#fff,#bfe3ff);-webkit-background-clip:text;background-clip:text;color:transparent}
-.stat .lbl{font-size:13px;color:#a5d8ff;margin-top:4px}
-@media(max-width:720px){.hero-stats{grid-template-columns:repeat(2,1fr)}.hero-inner{padding:60px 0 54px}}
-
-/* ---------- 区块通用 ---------- */
-section{padding:72px 0}
-section.alt{background:var(--bg-soft)}
-.sec-head{margin-bottom:40px}
-.sec-head .tag{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.1em;color:var(--brand);text-transform:uppercase;margin-bottom:10px}
-.sec-head h2{font-size:clamp(24px,3vw,34px);font-weight:800;letter-spacing:-.02em;line-height:1.25}
-.sec-head p{color:var(--muted);margin-top:12px;max-width:60em;font-size:16px}
-.sec-head .bar{width:44px;height:4px;border-radius:2px;background:linear-gradient(90deg,var(--brand),var(--brand-2));margin-top:18px}
-
-/* 概述卡片 */
-.overview-grid{display:grid;grid-template-columns:1.25fr 1fr;gap:24px;align-items:stretch}
-.card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:30px;box-shadow:var(--shadow)}
-.card h3{font-size:20px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:10px}
-.card h3 .ic{width:34px;height:34px;border-radius:9px;display:inline-flex;align-items:center;justify-content:center;background:linear-gradient(135deg,rgba(37,99,235,.12),rgba(6,182,212,.12));color:var(--brand);font-size:17px}
-.card p{color:var(--ink-2);font-size:15.5px}
-.card ul{list-style:none;margin-top:8px}
-.card ul li{position:relative;padding-left:22px;margin:9px 0;color:var(--ink-2);font-size:15px}
-.card ul li::before{content:"";position:absolute;left:2px;top:9px;width:9px;height:9px;border-radius:3px;background:linear-gradient(135deg,var(--brand),var(--brand-2));transform:rotate(45deg)}
-@media(max-width:860px){.overview-grid{grid-template-columns:1fr}}
-
-/* 图片画廊 */
-.gallery{display:grid;gap:22px}
-.gallery.cols-2{grid-template-columns:1fr 1fr}
-.gallery.cols-3{grid-template-columns:1fr 1fr 1fr}
-.gallery.cols-4{grid-template-columns:1fr 1fr 1fr 1fr}
-@media(max-width:860px){.gallery.cols-3,.gallery.cols-4{grid-template-columns:1fr 1fr}}
-@media(max-width:560px){.gallery.cols-2,.gallery.cols-3,.gallery.cols-4{grid-template-columns:1fr}}
-figure{margin:0}
-figure .imgbox{
-  position:relative;overflow:hidden;border-radius:var(--radius);background:#eef2f7;
-  border:1px solid var(--line);cursor:zoom-in;box-shadow:var(--shadow);
-  transition:transform .28s ease,box-shadow .28s ease;
-}
-figure .imgbox:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
-figure img{width:100%;height:auto;object-fit:cover;aspect-ratio:16/10;transition:transform .4s ease}
-figure .imgbox:hover img{transform:scale(1.03)}
-figure figcaption{text-align:center;font-size:14px;color:var(--ink-2);margin-top:12px;font-weight:500}
-figure figcaption small{display:block;color:var(--muted);font-weight:400;font-size:12.5px;margin-top:2px}
-.imgbox .zoom-ic{position:absolute;top:12px;right:12px;width:34px;height:34px;border-radius:9px;background:rgba(15,23,42,.55);color:#fff;display:flex;align-items:center;justify-content:center;font-size:15px;opacity:0;transition:opacity .2s;backdrop-filter:blur(4px)}
-figure .imgbox:hover .zoom-ic{opacity:1}
-
-/* 分步流程 */
-.steps{display:grid;gap:16px;counter-reset:step}
-.step{display:flex;gap:18px;background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:22px 24px;box-shadow:var(--shadow)}
-.step .num{flex:0 0 44px;width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#fff;font-weight:800;font-size:19px;display:flex;align-items:center;justify-content:center}
-.step h4{font-size:17px;font-weight:700;margin-bottom:5px}
-.step p{color:var(--ink-2);font-size:15px}
-
-/* 高亮结果 */
-.results{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-.result{background:linear-gradient(160deg,#fff,#f5f9ff);border:1px solid var(--line);border-radius:var(--radius);padding:28px;text-align:center;box-shadow:var(--shadow)}
-.result .big{font-size:34px;font-weight:800;letter-spacing:-.02em;background:linear-gradient(135deg,var(--brand),var(--brand-2));-webkit-background-clip:text;background-clip:text;color:transparent}
-.result .sub{font-size:14px;color:var(--ink-2);margin-top:6px}
-@media(max-width:720px){.results{grid-template-columns:1fr}}
-
-/* 说明条 */
-.note{display:flex;gap:12px;align-items:flex-start;background:#eff6ff;border:1px solid #bfdbfe;border-radius:var(--radius-sm);padding:16px 20px;color:#1e40af;font-size:14.5px;margin-top:26px}
-.note .em{font-size:18px;line-height:1.4}
-
-/* footer */
-footer{background:var(--hero-from);color:#cbd5e1;padding:48px 0;margin-top:20px}
-footer .inner{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;align-items:center}
-footer .tags{display:flex;flex-wrap:wrap;gap:8px}
-footer .tags span{font-size:12.5px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);padding:5px 12px;border-radius:999px}
-
-/* Lightbox */
-.lb{position:fixed;inset:0;z-index:200;background:rgba(4,10,22,.9);display:none;align-items:center;justify-content:center;padding:24px;backdrop-filter:blur(6px)}
-.lb.open{display:flex}
-.lb img{max-width:96vw;max-height:90vh;border-radius:10px;box-shadow:0 30px 80px rgba(0,0,0,.5);object-fit:contain}
-.lb .cap{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);color:#e2e8f0;font-size:14px;background:rgba(15,23,42,.7);padding:8px 18px;border-radius:999px;max-width:80vw;text-align:center}
-.lb .close{position:absolute;top:22px;right:26px;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.12);color:#fff;font-size:22px;display:flex;align-items:center;justify-content:center;cursor:pointer;border:none}
-.lb .close:hover{background:rgba(255,255,255,.24)}
+body{margin:0;font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;color:#1f2328;background:#fff;line-height:1.8}
+.wrap{max-width:900px;margin:0 auto;padding:40px 20px 80px}
+h1{font-size:26px;font-weight:700;margin:0 0 20px;line-height:1.4}
+p{margin:14px 0;font-size:16px}
+figure{margin:30px 0}
+figure img{max-width:100%;height:auto;display:block;margin:0 auto}
+figcaption{text-align:center;font-size:14px;color:#57606a;margin-top:8px}
 </style>
 </head>
 <body>
+<div class="wrap">
 
-<nav class="nav">
-  <div class="container nav-inner">
-    <div class="brand"><span class="brand-dot"></span>食用菌视觉采摘机械臂</div>
-    <div class="nav-links">
-      <a href="#overview">概述</a>
-      <a href="#generation">整机方案</a>
-      <a href="#gripper">末端夹爪</a>
-      <a href="#fea">仿真分析</a>
-      <a href="#vision">视觉识别</a>
-      <a href="#ik">逆运动学</a>
-      <a href="#results">成果</a>
-    </div>
-  </div>
-</nav>
+<h1>食用菌视觉采摘机械臂</h1>
 
-<header class="hero">
-  <div class="container hero-inner">
-    <span class="kicker">Robotics · Computer Vision · FEA</span>
-    <h1>食用菌视觉采摘机械臂<br><span class="grad">智能采摘 · 精准识别 · 结构优化</span></h1>
-    <p class="lead">针对菌棚内食用菌采摘效率低、损伤率高及视觉识别准确率低等问题，研制视觉采摘机械臂一代机与二代机，设计选用三种面向不同采摘需求的末端夹爪。</p>
-    <div class="hero-stats">
-      <div class="stat"><div class="num">2 代</div><div class="lbl">整机迭代</div></div>
-      <div class="stat"><div class="num">3 种</div><div class="lbl">末端夹爪设计</div></div>
-      <div class="stat"><div class="num">YOLOv8</div><div class="lbl">视觉识别模型</div></div>
-      <div class="stat"><div class="num">MLP+PSO</div><div class="lbl">逆运动学求解</div></div>
-    </div>
-  </div>
-</header>
+<p>针对菌棚内食用菌采摘效率低、损伤率高及视觉识别准确率低等问题，研制视觉采摘机械臂一代机与二代机，设计选用三种面向不同采摘需求的末端夹爪。</p>
 
-<section id="overview">
-  <div class="container">
-    <div class="sec-head">
-      <span class="tag">Project Overview</span>
-      <h2>项目概述</h2>
-      <p>面向菌棚非结构化环境的食用菌自动化采摘难题，从机械结构、视觉识别与运动控制三个维度系统性攻关，形成完整的技术闭环。</p>
-      <div class="bar"></div>
-    </div>
-    <div class="overview-grid">
-      <div class="card">
-        <h3><span class="ic">✦</span>技术路线</h3>
-        <p>项目采取「结构设计—仿真优化—视觉识别—运动规划」四位一体的研发路径，覆盖从关键零部件到整机系统的完整设计链条。</p>
-        <ul>
-          <li>设计一代机与二代机两代整机平台，逐步提升机构冗余度与作业柔性</li>
-          <li>基于 ANSYS 开展静力学、瞬态动力学、疲劳及响应面优化分析</li>
-          <li>融合公开与自建数据集训练 YOLOv8 视觉识别模型</li>
-          <li>针对冗余机械臂提出 MLP+PSO 融合逆运动学求解方法</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h3><span class="ic">⚙</span>核心创新点</h3>
-        <ul>
-          <li>三种差异化末端夹爪，适配不同规格与形态的食用菌</li>
-          <li>响应面法驱动的关键部件轻量化优化设计</li>
-          <li>多环境自建数据集增强模型泛化能力</li>
-          <li>MLP 快速解与 PSO 全局寻优相结合，解决冗余系统多解问题</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
+<figure>
+  <img src="gen1.png" alt="视觉采摘机械臂一代机">
+  <figcaption>视觉采摘机械臂一代机</figcaption>
+</figure>
 
-<section id="generation" class="alt">
-  <div class="container">
-    <div class="sec-head">
-      <span class="tag">Platform</span>
-      <h2>整机方案：一代机与二代机</h2>
-      <p>两代整机平台不断迭代，从基础采摘能力到冗余自由度柔性作业，逐步逼近真实菌棚的复杂工况。</p>
-      <div class="bar"></div>
-    </div>
-    <div class="gallery cols-2">
-      <figure>
-        <div class="imgbox" data-src="gen1.png" data-cap="视觉采摘机械臂一代机">
-          <img src="gen1.png" alt="视觉采摘机械臂一代机" loading="lazy"><span class="zoom-ic">⤢</span>
-        </div>
-        <figcaption>视觉采摘机械臂一代机<small>Gen-1 · 基础采摘平台</small></figcaption>
-      </figure>
-      <figure>
-        <div class="imgbox" data-src="gen2.png" data-cap="视觉采摘机械臂二代机">
-          <img src="gen2.png" alt="视觉采摘机械臂二代机" loading="lazy"><span class="zoom-ic">⤢</span>
-        </div>
-        <figcaption>视觉采摘机械臂二代机<small>Gen-2 · 冗余自由度平台</small></figcaption>
-      </figure>
-    </div>
-  </div>
-</section>
+<figure>
+  <img src="gen2.png" alt="视觉采摘机械臂二代机">
+  <figcaption>视觉采摘机械臂二代机</figcaption>
+</figure>
 
-<section id="gripper">
-  <div class="container">
-    <div class="sec-head">
-      <span class="tag">End Effectors</span>
-      <h2>三种末端夹爪设计</h2>
-      <p>针对不同采摘需求，设计三种结构原理各异的末端夹爪，兼顾抓取稳定性与柔顺性，降低损伤率。</p>
-      <div class="bar"></div>
-    </div>
-    <div class="gallery cols-3">
-      <figure>
-        <div class="imgbox" data-src="gripper1.png" data-cap="仿生连杆三指夹爪">
-          <img src="gripper1.png" alt="仿生连杆三指夹爪" loading="lazy"><span class="zoom-ic">⤢</span>
-        </div>
-        <figcaption>1. 仿生连杆三指夹爪<small>仿生包络抓取</small></figcaption>
-      </figure>
-      <figure>
-        <div class="imgbox" data-src="gripper2.png" data-cap="齿轮齿条驱动柔性二指夹爪">
-          <img src="gripper2.png" alt="齿轮齿条驱动柔性二指夹爪" loading="lazy"><span class="zoom-ic">⤢</span>
-        </div>
-        <figcaption>2. 齿轮齿条驱动柔性二指夹爪<small>柔性接触 · 低损伤</small></figcaption>
-      </figure>
-      <figure>
-        <div class="imgbox" data-src="gripper3.png" data-cap="气动柔性三指夹爪">
-          <img src="gripper3.png" alt="气动柔性三指夹爪" loading="lazy"><span class="zoom-ic">⤢</span>
-        </div>
-        <figcaption>3. 气动柔性三指夹爪<small>气动驱动 · 自适应</small></figcaption>
-      </figure>
-    </div>
-  </div>
-</section>
+<figure>
+  <img src="gripper1.png" alt="仿生连杆三指夹爪">
+  <figcaption>1.仿生连杆三指夹爪</figcaption>
+</figure>
 
-<section id="fea" class="alt">
-  <div class="container">
-    <div class="sec-head">
-      <span class="tag">Finite Element Analysis</span>
-      <h2>关键零部件有限元仿真</h2>
-      <p>使用 ANSYS 对关键零部件开展静力学、瞬态动力学、疲劳分析及基于响应面的优化分析，为结构设计与轻量化提供依据。</p>
-      <div class="bar"></div>
-    </div>
+<figure>
+  <img src="gripper2.png" alt="齿轮齿条驱动柔性二指夹爪">
+  <figcaption>2.齿轮齿条驱动柔性二指夹爪</figcaption>
+</figure>
 
-    <div class="steps">
-      <div class="step"><div class="num">1</div><div><h4>静力学分析</h4><p>验证夹爪、上臂与基座等关键承力零件在额定载荷下的强度与刚度，确保结构安全可靠。</p></div></div>
-      <div class="step"><div class="num">2</div><div><h4>瞬态动力学分析</h4><p>对同步带传动系统进行瞬态动力学仿真，评估动态载荷下的响应特性。</p></div></div>
-      <div class="step"><div class="num">3</div><div><h4>疲劳与碰撞分析</h4><p>开展肩部零件疲劳寿命分析及滑台碰撞分析，排查失效与干涉风险。</p></div></div>
-      <div class="step"><div class="num">4</div><div><h4>响应面优化分析</h4><p>基于响应面法对基座、上臂零件进行结构优化，实现轻量化设计。</p></div></div>
-    </div>
+<figure>
+  <img src="gripper3.png" alt="气动柔性三指夹爪">
+  <figcaption>3.气动柔性三指夹爪</figcaption>
+</figure>
 
-    <div class="gallery cols-3" style="margin-top:34px">
-      <figure>
-        <div class="imgbox" data-src="fea-gripper.png" data-cap="夹爪静力学分析"><img src="fea-gripper.png" alt="夹爪静力学分析" loading="lazy"><span class="zoom-ic">⤢</span></div>
-        <figcaption>夹爪静力学分析</figcaption>
-      </figure>
-      <figure>
-        <div class="imgbox" data-src="fea-arm.png" data-cap="上臂零件静力学分析"><img src="fea-arm.png" alt="上臂零件静力学分析" loading="lazy"><span class="zoom-ic">⤢</span></div>
-        <figcaption>上臂零件静力学分析</figcaption>
-      </figure>
-      <figure>
-        <div class="imgbox" data-src="fea-base.png" data-cap="基座静力学分析"><img src="fea-base.png" alt="基座静力学分析" loading="lazy"><span class="zoom-ic">⤢</span></div>
-        <figcaption>基座静力学分析</figcaption>
-      </figure>
-    </div>
-    <div class="gallery cols-3" style="margin-top:22px">
-      <figure>
-        <div class="imgbox" data-src="fea-belt.png" data-cap="同步带瞬态动力学分析"><img src="fea-belt.png" alt="同步带瞬态动力学分析" loading="lazy"><span class="zoom-ic">⤢</span></div>
-        <figcaption>同步带瞬态动力学分析</figcaption>
-      </figure>
-      <figure>
-        <div class="imgbox" data-src="fea-shoulder.png" data-cap="肩部零件疲劳分析"><img src="fea-shoulder.png" alt="肩部零件疲劳分析" loading="lazy"><span class="zoom-ic">⤢</span></div>
-        <figcaption>肩部零件疲劳分析</figcaption>
-      </figure>
-      <figure>
-        <div class="imgbox" data-src="fea-slide.png" data-cap="滑台碰撞分析"><img src="fea-slide.png" alt="滑台碰撞分析" loading="lazy"><span class="zoom-ic">⤢</span></div>
-        <figcaption>滑台碰撞分析</figcaption>
-      </figure>
-    </div>
-    <div class="gallery cols-2" style="margin-top:22px">
-      <figure>
-        <div class="imgbox" data-src="fea-opt-base.png" data-cap="基座零件响应面优化分析"><img src="fea-opt-base.png" alt="基座零件响应面优化分析" loading="lazy"><span class="zoom-ic">⤢</span></div>
-        <figcaption>基座零件响应面优化分析</figcaption>
-      </figure>
-      <figure>
-        <div class="imgbox" data-src="fea-opt-arm.png" data-cap="上臂零件响应面优化分析"><img src="fea-opt-arm.png" alt="上臂零件响应面优化分析" loading="lazy"><span class="zoom-ic">⤢</span></div>
-        <figcaption>上臂零件响应面优化分析</figcaption>
-      </figure>
-    </div>
-  </div>
-</section>
+<p>使用ANSYS对关键零部件开展静力学、瞬态动力学、疲劳分析及基于响应面的优化分析。</p>
 
-<section id="vision">
-  <div class="container">
-    <div class="sec-head">
-      <span class="tag">Computer Vision</span>
-      <h2>YOLOv8 视觉识别模型</h2>
-      <p>融合 Kaggle 公开数据集与自建多环境数据集训练 YOLOv8 视觉识别模型，增强模型在不同光照与背景下的泛化能力，提升采摘定位精度。</p>
-      <div class="bar"></div>
-    </div>
-    <div class="gallery cols-2">
-      <figure>
-        <div class="imgbox" data-src="yolov8.png" data-cap="YOLOv8 模型训练结果"><img src="yolov8.png" alt="YOLOv8 模型训练" loading="lazy"><span class="zoom-ic">⤢</span></div>
-        <figcaption>YOLOv8 模型训练结果<small>训练指标与收敛曲线</small></figcaption>
-      </figure>
-      <figure>
-        <div class="imgbox" data-src="yolov8-detect.jpg" data-cap="视觉识别检测效果"><img src="yolov8-detect.jpg" alt="视觉识别检测效果" loading="lazy"><span class="zoom-ic">⤢</span></div>
-        <figcaption>视觉识别检测效果<small>目标检测与定位</small></figcaption>
-      </figure>
-    </div>
-  </div>
-</section>
+<figure>
+  <img src="fea-gripper.png" alt="夹爪静力学分析">
+  <figcaption>夹爪静力学分析</figcaption>
+</figure>
 
-<section id="ik" class="alt">
-  <div class="container">
-    <div class="sec-head">
-      <span class="tag">Inverse Kinematics</span>
-      <h2>MLP+PSO 融合逆运动学求解</h2>
-      <p>针对二代机冗余机械臂系统逆运动学的欠定多解问题，提出 MLP+PSO 融合求解方法，兼顾求解速度与全局最优性。</p>
-      <div class="bar"></div>
-    </div>
-    <div class="overview-grid">
-      <div class="card">
-        <h3><span class="ic">◈</span>求解框架</h3>
-        <p>搭建基于 Python 的逆运动学求解仿真框架，设计静态位姿求解、连续轨迹跟踪、消融实验及鲁棒性测试，系统验证方法有效性。</p>
-        <ul>
-          <li>MLP 提供快速初值解，PSO 迭代收敛至全局最优</li>
-          <li>静态位姿求解 + 连续轨迹跟踪双重验证</li>
-          <li>消融实验与鲁棒性测试验证方法泛化能力</li>
-        </ul>
-      </div>
-      <figure>
-        <div class="imgbox" data-src="ik-mlp-pso.png" data-cap="MLP+PSO 逆运动学求解结果"><img src="ik-mlp-pso.png" alt="MLP+PSO 逆运动学求解" loading="lazy" style="aspect-ratio:auto;max-height:340px"><span class="zoom-ic">⤢</span></div>
-        <figcaption>MLP+PSO 逆运动学求解仿真结果</figcaption>
-      </figure>
-    </div>
-    <div class="note"><span class="em">✎</span><span>使用 LaTeX 完成英文论文撰写，并完成相关实验数据可视化；论文已完成撰写并投稿至相关期刊。</span></div>
-  </div>
-</section>
+<figure>
+  <img src="fea-arm.png" alt="上臂零件静力学分析">
+  <figcaption>上臂零件静力学分析</figcaption>
+</figure>
 
-<section id="results">
-  <div class="container">
-    <div class="sec-head">
-      <span class="tag">Achievements</span>
-      <h2>项目成果</h2>
-      <p>通过有限元仿真与参数优化，为机械臂结构设计与轻量化提供依据，实现从设计、仿真到样机调试的完整闭环。</p>
-      <div class="bar"></div>
-    </div>
-    <div class="results">
-      <div class="result"><div class="big">1 项</div><div class="sub">申请国家发明专利</div></div>
-      <div class="result"><div class="big">1 项</div><div class="sub">授权软件著作权</div></div>
-      <div class="result"><div class="big">国奖三等奖</div><div class="sub">中国国际大学生创新大赛</div></div>
-    </div>
-  </div>
-</section>
+<figure>
+  <img src="fea-base.png" alt="基座静力学分析">
+  <figcaption>基座静力学分析</figcaption>
+</figure>
 
-<footer>
-  <div class="container inner">
-    <div>食用菌视觉采摘机械臂 · 项目展示</div>
-    <div class="tags">
-      <span>YOLOv8</span><span>ANSYS</span><span>逆运动学</span><span>MLP-PSO</span><span>FEA</span><span>机械设计</span>
-    </div>
-  </div>
-</footer>
+<figure>
+  <img src="fea-belt.png" alt="同步带瞬态动力学分析">
+  <figcaption>同步带瞬态动力学分析</figcaption>
+</figure>
 
-<div class="lb" id="lb">
-  <button class="close" aria-label="关闭">×</button>
-  <img id="lb-img" src="" alt="">
-  <div class="cap" id="lb-cap"></div>
+<figure>
+  <img src="fea-shoulder.png" alt="肩部零件疲劳分析">
+  <figcaption>肩部零件疲劳分析</figcaption>
+</figure>
+
+<figure>
+  <img src="fea-slide.png" alt="滑台碰撞分析">
+  <figcaption>滑台碰撞分析</figcaption>
+</figure>
+
+<figure>
+  <img src="fea-opt-base.png" alt="基座零件响应面优化分析">
+  <figcaption>基座零件响应面优化分析</figcaption>
+</figure>
+
+<figure>
+  <img src="fea-opt-arm.png" alt="上臂零件响应面优化分析">
+  <figcaption>上臂零件响应面优化分析</figcaption>
+</figure>
+
+<p>融合 Kaggle 公开数据集与自建多环境数据集训练 YOLOv8 视觉识别模型。</p>
+
+<figure>
+  <img src="yolov8.png" alt="YOLOv8 视觉识别模型">
+</figure>
+
+<figure>
+  <img src="yolov8-detect.jpg" alt="视觉识别检测效果">
+</figure>
+
+<p>通过有限元仿真与参数优化，为机械臂结构设计与轻量化提供依据；完成一代机装配与调试；申请国家专利1项，授权软著1项，所在项目获中国国际大学生创新大赛国家级三等奖。</p>
+
+<p>针对二代机冗余机械臂系统逆运动学的欠定多解问题，提出 MLP+PSO 融合求解方法。</p>
+
+<figure>
+  <img src="ik-mlp-pso.png" alt="MLP+PSO 逆运动学求解">
+</figure>
+
+<p>搭建基于 Python 的逆运动学求解仿真框架，设计静态位姿求解、连续轨迹跟踪、消融实验及鲁棒性测试。使用 LaTeX 完成英文论文撰写，并完成相关实验数据可视化。</p>
+
+<p>完成论文撰写并投稿至相关期刊。</p>
+
 </div>
-
-<script>
-(function(){
-  var lb=document.getElementById('lb'),img=document.getElementById('lb-img'),cap=document.getElementById('lb-cap');
-  document.querySelectorAll('.imgbox').forEach(function(b){
-    b.addEventListener('click',function(){
-      img.src=b.getAttribute('data-src');
-      cap.textContent=b.getAttribute('data-cap')||'';
-      lb.classList.add('open');
-      document.body.style.overflow='hidden';
-    });
-  });
-  function close(){lb.classList.remove('open');document.body.style.overflow='';}
-  lb.querySelector('.close').addEventListener('click',close);
-  lb.addEventListener('click',function(e){if(e.target===lb)close();});
-  document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
-})();
-</script>
 </body>
 </html>
